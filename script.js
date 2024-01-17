@@ -2,54 +2,20 @@
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
-function generatePassword(){
-
-var length = window.prompt("password must be between 8 and 128 characters long! \nselect desired number:");
-var includeUpperCase = confirm(" password needs to contain upperCase letters! Click continue");
-var includeLowerCase = confirm(" password needs to contain lowerCase letters! Click continue");
-var includesymbols = confirm(" password needs to contain symbols! Click continue");
-var includeNumbers = confirm(" password needs to contain numbers! Click continue");
-
-
-var upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var lowerCase = "abcdefghijklmnopqrstuvwxyz";
-var symbols = "!@#$%^&*()_+:><?|";
-var numbers = "0123456789";
-var randomSele = [];
 
 
 
-if(length < 8 || length > 128){
-  window.alert("password must be between atleast 8 and 128 characters!");
-  var length = window.prompt("password must be between 8 to 128 characters");
-}
-
-if(upperCase === false && lowerCase === false && symbols === false && numbers === false){
-  return "password does not meet the requirements";
-};
-
-
-
-
-if(upperCase){randomSele += includeUpperCase};
-if(lowerCase){randomSele += includeLowerCase};
-if(symbols){randomSele += includesymbols};
-if(numbers){randomSele += includeNumbers};
-
-let finalPassword ='';
-for(let i = 0; i < length; i++){
-  let create = [Math.floor(Math.random() * randomSele.length)];
-  finalPassword = finalPassword + randomSele[create];
-}
-return finalPassword;
-};
 
 
 
 function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-  passwordText.value = password;
+
+   var correctPrompts = makePrompts();
+   var passwordText = document.querySelector("#password");
+   if(correctPrompts){
+     var createPassword = generatePassword();
+     passwordText.value = createPassword;
+   }
 }
 
 
@@ -58,7 +24,51 @@ generateBtn.addEventListener("click", writePassword);
 
 
 
+var length = "";
+var choice = [];
+
+var upperCase = ["A","B","C","D","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+var lowercase = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+var symbols = ["!","@","#","$","%","^","&","*","(",")","`","~","-","=",";"];
+var numbers = ["0","1","2","3","4","5","6","7","8","9"];
 
 
 
+
+
+function generatePassword(){
+var password =[];
+for(var i = 0; length; i++){
+  var random = Math.floor(Math.random() * choice.length);
+  password = password + choice[random];
+}
+return password;
+}
+
+function makePrompts(){
+  choice = "";
+    length = parseInt(prompt("password needs to be between 8-128 \nchoose desired number!"));
+    
+    if(isNaN(length) || length < 8 || length > 128){
+      alert("chosen number must be between 8 - 128!")
+      return false;
+    }
+
+    if(confirm("would you like upperCase letters?")){
+      choice = choice.concat(upperCase);
+    }
+    
+    if(confirm("would you like lowerCase letters?")){
+      choice = choice.concat(lowercase);
+    }
+
+    if(confirm("would you like special symbols?")){
+      choice = choice.concat(symbols);
+    }
+
+    if(confirm("would like numbers?")){
+      choice = choice.concat(numbers);
+    }
+    return true;
+}
 
